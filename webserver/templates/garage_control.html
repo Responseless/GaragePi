@@ -52,7 +52,7 @@
   var nIntervId;
 
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-/*
+
   function startStatusUpdate() {
     updateOpenClosed();
     nIntervId = setInterval(updateOpenClosed, 1500);
@@ -80,7 +80,7 @@
   function stopStatusUpdate() {
     clearInterval(nIntervId);
   }
-*/
+
 
   // Hookup our confirm button to trigger the door switch
   $(function(){
@@ -91,7 +91,7 @@
   });
 
   // Begin the update query loop
-//  startStatusUpdate();
+  startStatusUpdate();
 </script>
 {% endif %}
 {% endblock %}
