@@ -5,11 +5,12 @@
   <div class="row">
 
     <div class="col-sm-6 col-sm-push-6">
+<!--
       <div class="panel panel-primary text-center hidden">
         <div class="panel-heading">Door Status</div>
         <h3 id="status" class="text-uppercase">UNKNOWN</h3>
       </div>
-
+-->
       <div class="panel panel-primary text-center">
         <div class="panel-heading">Pi Status</div>
         <h5>CPU: <span id="cpuTemp">?</span>° C</h5>
@@ -28,7 +29,7 @@
               <h4 class="modal-title">Door Switch</h4>
             </div>
             <div class="modal-body">
-              <p>Confirm that you want to <span id="doorAction"></span> the door.</p>
+              <p>Confirm that you want to trigger the door.</p>
             </div>
             <div class="modal-footer">
               <button type="submit" id="triggerButton" class="btn btn-default btn-success pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Proceed</button>
@@ -40,7 +41,7 @@
 
       <!-- Open / Close button -->
       <button type="button" id="openCloseButton" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModal">
-          Open / Close Door
+          Trigger Door
       </button>
     </div>
 
@@ -51,7 +52,7 @@
   var nIntervId;
 
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
+/*
   function startStatusUpdate() {
     updateOpenClosed();
     nIntervId = setInterval(updateOpenClosed, 1500);
@@ -79,6 +80,7 @@
   function stopStatusUpdate() {
     clearInterval(nIntervId);
   }
+*/
 
   // Hookup our confirm button to trigger the door switch
   $(function(){
@@ -89,7 +91,7 @@
   });
 
   // Begin the update query loop
-  startStatusUpdate();
+//  startStatusUpdate();
 </script>
 {% endif %}
 {% endblock %}
