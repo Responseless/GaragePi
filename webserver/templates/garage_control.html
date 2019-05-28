@@ -6,11 +6,13 @@
 
     <div class="col-sm-6 col-sm-push-6">
 <!--
-      <div class="panel panel-primary text-center hidden">
+      <div class="panel panel-primary text-center">
         <div class="panel-heading">Door Status</div>
         <h3 id="status" class="text-uppercase">UNKNOWN</h3>
       </div>
 -->
+      <input id="status" type="hidden">
+
       <div class="panel panel-primary text-center">
         <div class="panel-heading">Pi Status</div>
         <h5>CPU: <span id="cpuTemp">?</span>° C</h5>
@@ -70,8 +72,7 @@
                 $("#gpuTemp").html(data.gpu_temp_c.toFixed(2));
               })
               .fail(function() {
-                  $("#status").text("UNKNOWN")
-                              .removeClass("text-warning text-success");
+                  $("#status").text("UNKNOWN").removeClass("text-warning text-success");
                 $("#cpuTemp").html("?");
                 $("#gpuTemp").html("?");
               });
