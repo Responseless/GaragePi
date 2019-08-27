@@ -8,5 +8,5 @@ pyzmq==18.0.1
 requests==2.21.0
 RPi.GPIO==0.6.5
 schedule==0.6.0
-Werkzeug==0.15.1
+werkzeug>=0.15.3
 wheel==0.33.1
