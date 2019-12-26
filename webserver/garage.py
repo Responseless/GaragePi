@@ -98,7 +98,7 @@ def trigger_openclose():
     return redirect(url_for('show_control'))
 
 @app.route('/triggerAPI' + api_trigger_key, methods=['GET'])
-def trigger_openclose():
+def trigger_opencloseAPI():
     app.logger.debug('Received GET to triggerAPI')
     if not api_trigger_key: return 'No api_trigger_key setup!'
 
