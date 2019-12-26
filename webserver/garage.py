@@ -2,6 +2,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 import os
+import time
 import sys
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify, has_request_context
@@ -48,6 +49,8 @@ app.config.from_pyfile(default_cfg_file)
 app.logger.debug('Looking for custom app config in \'%s\'' % os.path.join(app.instance_path, 'app.cfg'))
 app.config.from_pyfile('app.cfg')
 api_trigger_key = app.config['API_TRIGGER_KEY']
+replay_delay_seconds = app.config['REPLAY_DELAY_TIMER_SECONDS']
+if not replay_delay_seconds: replay_delay_seconds = 30
 
 
 # -------------- App Context Resources ----------------
@@ -92,8 +95,27 @@ def trigger_openclose():
         abort(401)
     app.logger.debug('Triggering relay')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
-                                   app.config['USERNAME']);
+                                   app.config['USERNAME'])
     app.logger.debug('Relay triggered')
+    flash('Relay successfully triggered')
+    return redirect(url_for('show_control'))
+
+@app.route('/triggertimed', methods=['POST'])
+def trigger_openclosetimed():
+    app.logger.debug('Received POST to timed trigger')
+    if not session.get('logged_in'):
+        app.logger.warning('Refusing to timed trigger relay because not logged in!')
+        abort(401)
+    app.logger.debug('Triggering relay')
+    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+    app.logger.debug('Relay triggered')
+    app.logger.debug('Waiting ' + str(replay_delay_seconds) + ' seconds')
+    time.sleep(replay_delay_seconds)
+    app.logger.debug('Triggering delayed relay ' + str(replay_delay_seconds) + ' seconds')
+    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+    app.logger.debug('Relay deayled triggered')
     flash('Relay successfully triggered')
     return redirect(url_for('show_control'))
 
@@ -104,7 +126,7 @@ def trigger_opencloseAPI():
 
     app.logger.debug('Triggering API relay')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
-                                   app.config['USERNAME']);
+                                   app.config['USERNAME'])
     app.logger.debug('Relay API triggered')
     flash('Relay API successfully triggered')
     return redirect(url_for('show_control'))

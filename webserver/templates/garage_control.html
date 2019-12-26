@@ -117,10 +117,7 @@
       // Auto close or open (repeat function) after 30 seconds
       $('#triggerButtonTimed').click(function(e){
         e.preventDefault();
-        $.post("{{ url_for('trigger_openclose') }}");
-        setTimeout(function() {
-          $.post("{{ url_for('trigger_openclose') }}");
-        }, 30000);
+        $.post("{{ url_for('trigger_openclosetimed') }}");
       });
   });
 
