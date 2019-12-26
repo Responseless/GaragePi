@@ -17,6 +17,13 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
+#### Dec 2019 Update - mRaRn
+
+- Added button to auto-close (or auto-open) the door after specified seconds.
+- Hid the Status of the door as i do not have a sensor connected to check this.
+- Added external GET API point for other applications to hit to open/close the door without auth.
+
+
 #### Feb 2016 Update - IFTTT Maker Support!
 
 GaragePi now supports [IFTTT] alerts through the new [Maker Channel]. It will generate events when an open or close is
