@@ -47,6 +47,7 @@ app.logger.debug('Loading default config file from \'%s\'' % default_cfg_file)
 app.config.from_pyfile(default_cfg_file)
 app.logger.debug('Looking for custom app config in \'%s\'' % os.path.join(app.instance_path, 'app.cfg'))
 app.config.from_pyfile('app.cfg')
+api_trigger_key = app.config['API_TRIGGER_KEY']
 
 
 # -------------- App Context Resources ----------------
@@ -94,6 +95,18 @@ def trigger_openclose():
                                    app.config['USERNAME']);
     app.logger.debug('Relay triggered')
     flash('Relay successfully triggered')
+    return redirect(url_for('show_control'))
+
+@app.route('/triggerAPI' + api_trigger_key, methods=['GET'])
+def trigger_openclose():
+    app.logger.debug('Received GET to triggerAPI')
+    if not api_trigger_key: return 'No api_trigger_key setup!'
+
+    app.logger.debug('Triggering API relay')
+    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME']);
+    app.logger.debug('Relay API triggered')
+    flash('Relay API successfully triggered')
     return redirect(url_for('show_control'))
 
 
