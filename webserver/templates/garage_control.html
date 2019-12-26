@@ -15,8 +15,8 @@
 
       <div class="panel panel-primary text-center">
         <div class="panel-heading">Pi Status</div>
-        <h5>CPU: <span id="cpuTemp">?</span>° C</h5>
-        <h5>GPU: <span id="gpuTemp">?</span>° C</h5>
+        <h5>CPU: <span id="cpuTemp">?</span>° C / <span id="cpuTempF">?</span>° F</h5>
+        <h5>GPU: <span id="gpuTemp">?</span>° C / <span id="gpuTempF">?</span>° F</h5>
       </div>
     </div>
 
@@ -67,7 +67,7 @@
       <br />
       <!-- Open / Close button -->
       <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModalTimed">
-        Trigger Door then auto close/open
+        Trigger Door with auto close/open
     </button>
     </div>
 
@@ -90,15 +90,20 @@
                 $("#status").text(data.is_open ? "OPEN": "CLOSED")
                             .removeClass("text-danger text-success")
                             .addClass(data.is_open ? "text-danger": "text-success");
-                $("#openCloseButton").html(data.is_open ? "Close Door": "Open Door");
-                $("#doorAction").html(data.is_open ? "close": "open");
+                //$("#openCloseButton").html(data.is_open ? "Close Door": "Open Door");
+                //$("#doorAction").html(data.is_open ? "close": "open");
                 $("#cpuTemp").html(data.cpu_temp_c.toFixed(2));
                 $("#gpuTemp").html(data.gpu_temp_c.toFixed(2));
+                $("#cpuTempF").html(data.cpu_temp_f.toFixed(2));
+                $("#gpuTempF").html(data.gpu_temp_f.toFixed(2));
+
               })
               .fail(function() {
-                  $("#status").text("UNKNOWN").removeClass("text-warning text-success");
+                $("#status").text("UNKNOWN").removeClass("text-warning text-success");
                 $("#cpuTemp").html("?");
                 $("#gpuTemp").html("?");
+                $("#cpuTempF").html("?");
+                $("#gpuTempF").html("?");
               });
   }
 
