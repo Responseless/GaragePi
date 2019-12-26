@@ -50,7 +50,7 @@
             <h4 class="modal-title">Door Switch Timed</h4>
           </div>
           <div class="modal-body">
-            <p>Confirm that you want to trigger the door with timed reaction (30 seconds).</p>
+            <p>Confirm that you want to trigger the door with auto close/open.</p>
           </div>
           <div class="modal-footer">
             <button type="submit" id="triggerButtonTimed" class="btn btn-default btn-success pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Proceed</button>
@@ -67,7 +67,7 @@
       <br />
       <!-- Open / Close button -->
       <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModalTimed">
-        Trigger Door then auto-close (30 secs)
+        Trigger Door then auto close/open
     </button>
     </div>
 
@@ -114,7 +114,7 @@
         $.post("{{ url_for('trigger_openclose') }}");
       });
 
-      // Auto close or open (repeat function) after 30 seconds
+      // Auto close or open (repeat function) after x seconds
       $('#triggerButtonTimed').click(function(e){
         e.preventDefault();
         $.post("{{ url_for('trigger_openclosetimed') }}");

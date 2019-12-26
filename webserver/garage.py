@@ -115,7 +115,7 @@ def trigger_openclosetimed():
     app.logger.debug('Triggering delayed relay ' + str(replay_delay_seconds) + ' seconds')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
-    app.logger.debug('Relay deayled triggered')
+    app.logger.debug('Relay delayed triggered')
     flash('Relay successfully triggered')
     return redirect(url_for('show_control'))
 
@@ -128,6 +128,23 @@ def trigger_opencloseAPI():
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
     app.logger.debug('Relay API triggered')
+    flash('Relay API successfully triggered')
+    return redirect(url_for('show_control'))
+
+@app.route('/triggerAPItimed' + api_trigger_key, methods=['GET'])
+def trigger_opencloseAPItimed():
+    app.logger.debug('Received GET to triggerAPItimed')
+    if not api_trigger_key: return 'No api_trigger_key setup!'
+
+    app.logger.debug('Triggering API timed relay')
+    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+    app.logger.debug('Waiting ' + str(replay_delay_seconds) + ' seconds')
+    time.sleep(replay_delay_seconds)
+    app.logger.debug('Triggering delayed API relay timed ' + str(replay_delay_seconds) + ' seconds')
+    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+    app.logger.debug('Relay delayed triggered')
     flash('Relay API successfully triggered')
     return redirect(url_for('show_control'))
 
