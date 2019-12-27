@@ -68,7 +68,11 @@
       <!-- Open / Close button -->
       <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModalTimed">
         Trigger Door with auto close/open
-    </button>
+      </button>
+      <div id="countdown" style="display:none; text-align:center;">
+        <h3>Triggering in <span id="secondsCountdown"></span></h3>
+      </div>
+
     </div>
 
   </div>
@@ -123,8 +127,45 @@
       $('#triggerButtonTimed').click(function(e){
         e.preventDefault();
         $.post("{{ url_for('trigger_openclosetimed') }}");
+        countdown(30);
       });
   });
+
+  function countdown(seconds) {
+    var countdown = seconds,
+    countdowndiv = document.querySelector('#countdown'),
+    display = document.querySelector('#secondsCountdown');
+    //document.querySelector('#openCloseButtonTimed').setAttribute("disabled","disabled");
+    startTimer(countdown, display, countdowndiv);
+    //document.querySelector('#openCloseButtonTimed').removeAttribute("disabled");
+  }
+
+  function startTimer(duration, display, countdowndiv) {
+    var timer = duration, minutes, seconds, inter;
+    
+    countdowndiv.setAttribute("style", "display: block; text-align:center;");
+    inter = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "" + minutes : minutes;
+      seconds = seconds < 10 ? "" + seconds : seconds;
+
+      if (minutes > 0) {
+        display.textContent = minutes + " m " + seconds + " s";
+      } else {
+        display.textContent = seconds + " seconds";
+      }
+
+      if (--timer < 0) {
+          timer = duration;
+          countdowndiv.setAttribute("style", "display:none; text-align:center;");
+          display.textContent = "";
+          clearInterval(inter);
+      }
+
+    }, 1000);
+  }
 
   // Begin the update query loop
   startStatusUpdate();
