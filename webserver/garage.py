@@ -108,9 +108,9 @@ def trigger_openclosetimed():
         abort(401)
 
     autoTime = replay_delay_seconds
-    newTime = request.args.get('time') # request.form['time']
+    newTime = request.args.get('time')
     if isinstance(newTime, int):
-        if newTime > 0 and newTime <= 60:
+        if newTime > 0 and newTime <= 120:
             autoTime = newTime
 
     app.logger.debug('Triggering relay')
@@ -143,12 +143,18 @@ def trigger_opencloseAPItimed():
     app.logger.debug('Received GET to triggerAPItimed')
     if not api_trigger_key: return 'No api_trigger_key setup!'
 
+    autoTime = replay_delay_seconds
+    newTime = request.args.get('time')
+    if isinstance(newTime, int):
+        if newTime > 0 and newTime <= 120:
+            autoTime = newTime
+
     app.logger.debug('Triggering API timed relay')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
-    app.logger.debug('Waiting ' + str(replay_delay_seconds) + ' seconds')
-    time.sleep(replay_delay_seconds)
-    app.logger.debug('Triggering delayed API relay timed ' + str(replay_delay_seconds) + ' seconds')
+    app.logger.debug('Waiting ' + str(autoTime) + ' seconds')
+    time.sleep(autoTime)
+    app.logger.debug('Triggering delayed API relay timed ' + str(autoTime) + ' seconds')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
     app.logger.debug('Relay delayed triggered')
