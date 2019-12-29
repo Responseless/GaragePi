@@ -66,10 +66,10 @@
       </button>
       <br />
       <!-- Open / Close button -->
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-value="10">
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="10">
         10 secs
       </button>
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-value="30">
+      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="30">
         30 secs
       </button>
 
@@ -123,22 +123,29 @@
 
   // Hookup our confirm button to trigger the door switch
   $(function(){
-      $('#triggerButton').click(function(e){
-        e.preventDefault();
-        $.post("{{ url_for('trigger_openclose') }}");
-      });
+    $('#triggerButton').click(function(e){
+      e.preventDefault();
+      $.post("{{ url_for('trigger_openclose') }}");
+    });
 
-      // Auto close or open (repeat function) after x seconds
-      $('#triggerButtonTimed').click(function(e){
-        e.preventDefault();
-        var autoTime = parseInt($(this).data('value'));
-        if (autoTime > 0 && autoTime <= 60) {
-          $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime } );
-          countdown(autoTime);
-        } else {
-          alert("error");
-        }
-      });
+    // Auto close or open (repeat function) after x seconds
+    $('#triggerButtonTimed').click(function(e){
+      e.preventDefault();
+      var autoTime = parseInt($(this).data('val'));
+      if (autoTime > 0 && autoTime <= 60) {
+        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime } );
+        countdown(autoTime);
+      } else {
+        alert("error: value is bad.");
+      }
+    });
+
+    // Set the timer value for when the user clicks Proceed in modal
+    $('#confirmModalTimed').on('show.bs.modal', function (event) {
+      var timerVal = $(event.relatedTarget).data('val');
+      $(this).find("#triggerButtonTimed").attr("data-val", timerVal);
+    });
+
   });
 
   function countdown(seconds) {
