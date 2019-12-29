@@ -108,7 +108,7 @@ def trigger_openclosetimed():
         abort(401)
 
     autoTime = replay_delay_seconds
-    newTime = int(request.form['time'])
+    newTime = request.args.get('time') # request.form['time']
     if isinstance(newTime, int):
         if newTime > 0 and newTime <= 60:
             autoTime = newTime
