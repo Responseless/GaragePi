@@ -66,9 +66,14 @@
       </button>
       <br />
       <!-- Open / Close button -->
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModalTimed">
-        Trigger Door with auto close/open
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-value="10">
+        10 secs
       </button>
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-value="30">
+        30 secs
+      </button>
+
+
       <div id="countdown" style="display:none; text-align:center;">
         <h3>Triggering in <span id="secondsCountdown"></span></h3>
       </div>
@@ -126,8 +131,13 @@
       // Auto close or open (repeat function) after x seconds
       $('#triggerButtonTimed').click(function(e){
         e.preventDefault();
-        $.post("{{ url_for('trigger_openclosetimed') }}");
-        countdown(30);
+        var autoTime = parseInt($(this).data('value'));
+        if (autoTime > 0 && autoTime <= 60) {
+          $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime } );
+          countdown(autoTime);
+        } else {
+          alert("error");
+        }
       });
   });
 
