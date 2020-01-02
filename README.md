@@ -1,4 +1,4 @@
-# GaragePi
+# GaragePi Custom
 Overengineer your garage door with your Raspberry Pi!
 
 Use a Raspberry Pi to open or close your garage door and to sense whether it's currently open. You can do this from the 
@@ -19,7 +19,7 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 #### Dec 2019 Update - mRaRn
 
-- Added button to auto-close (or auto-open) the door after specified seconds.
+- Added buttons to auto-close (or auto-open) the door after specified seconds 15/30.
 - Hid the Status of the door as i do not have a sensor connected to check this.
 - Added external GET API point for other applications to hit to open/close the door without auth.
 
