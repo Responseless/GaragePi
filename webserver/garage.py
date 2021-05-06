@@ -51,7 +51,7 @@ app.config.from_pyfile('app.cfg')
 api_trigger_key = app.config['API_TRIGGER_KEY']
 replay_delay_seconds = app.config['REPLAY_DELAY_TIMER_SECONDS']
 if not replay_delay_seconds: replay_delay_seconds = 30
-
+show_timed_buttons = app.config['SHOW_TIMED_BUTTONS']
 
 # -------------- App Context Resources ----------------
 def get_api_client() -> GaragePiClient:
@@ -85,6 +85,7 @@ def close_db(error):
 @app.route('/')
 def show_control():
     app.logger.debug('Received request for /')
+    session['show_timed_buttons'] = show_timed_buttons
     return render_template('garage_control.html')
 
 @app.route('/trigger', methods=['POST'])
