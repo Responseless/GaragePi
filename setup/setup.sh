@@ -45,7 +45,7 @@ echo "Installing pip..."
 curl --silent --show-error --retry 5 https://bootstrap.pypa.io/pip/3.5/get-pip.py | sudo python3
 if [ $? -ne 0 ]; then exit 1; fi
 echo -e "\nInstalling virtualenv..."
-e
+sudo pip install virtualenv
 if [ $? -ne 0 ]; then exit 1; fi
 
 # Install virtual environment and requirements
