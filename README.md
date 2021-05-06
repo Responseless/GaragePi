@@ -69,6 +69,8 @@ other features that require running all the time instead of just within a web re
 - Garage door activity generates [IFTTT] events.
 - Responsive UI for both desktop and mobile use.
 - Show the RPI's internal temps because, well, I can.
+- Added Extra buttons to Auto close door after 15 and 30 seconds
+- Added API for remote calls without using web interface
 
 #### Planned Features
 
