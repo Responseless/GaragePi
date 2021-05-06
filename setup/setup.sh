@@ -42,10 +42,10 @@ fi
 
 # Make sure pip and virtualenv are installed. Install using python2 as this is more reliable.
 echo "Installing pip..."
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/pip/3.5/get-pip.py | sudo python3
 if [ $? -ne 0 ]; then exit 1; fi
 echo -e "\nInstalling virtualenv..."
-sudo pip install virtualenv
+e
 if [ $? -ne 0 ]; then exit 1; fi
 
 # Install virtual environment and requirements
