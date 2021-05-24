@@ -135,14 +135,14 @@ def trigger_openclosetimed():
                                    app.config['USERNAME'])
     app.logger.debug('Relay delayed triggered')
      
-    if (btn = 1):
+    if (btn == 1):
       if (timed_buttons1_seconds_3rd > 0):
          time.sleep(timed_buttons1_seconds_3rd)
          get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
          app.logger.debug('Relay delayed 3rd triggered 9 - btn1')
      
-    if (btn = 2):
+    if (btn == 2):
       if (timed_buttons2_seconds_3rd > 0):
          time.sleep(timed_buttons2_seconds_3rd)
          get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
