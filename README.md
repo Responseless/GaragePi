@@ -21,7 +21,7 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 - Added Configuration to hide timed buttons, set time for each button before re-triggering. This can be used to stop a gate opening, or auto-close etc.
 - Upgraded some dependencies for security and other reasons as they were outdated and would not clean install automatically anymore (fixed).
-
+- Added favicons
 
 #### Dec 2019 Update - mRaRn
 
