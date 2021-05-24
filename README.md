@@ -17,10 +17,17 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
+#### May 2021 Update - mRaRn
+
+- Added Configuration to hide timed buttons
+- Used with my gate now instead of a Garage door so timed events are shorter so I may add user configurable later.
+- Upgraded some dependencies for security and other reasons as they were outdated and would not clean install automatically anymore.
+
+
 #### Dec 2019 Update - mRaRn
 
 - Added buttons to auto-close (or auto-open) the door after specified seconds 15/30.
-- Hid the Status of the door as i do not have a sensor connected to check this.
+- Hid the Status of the door as I don't have a sensor connected to check this.
 - Added external GET API point for other applications to hit to open/close the door without auth.
 
 
