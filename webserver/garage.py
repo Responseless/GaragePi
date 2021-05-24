@@ -51,11 +51,12 @@ app.config.from_pyfile('app.cfg')
 api_trigger_key = app.config['API_TRIGGER_KEY']
 replay_delay_seconds = app.config['REPLAY_DELAY_TIMER_SECONDS']
 if not replay_delay_seconds: replay_delay_seconds = 30
-show_timed_buttons = app.config['SHOW_TIMED_BUTTONS']
 show_timed_buttons1 = app.config['SHOW_TIMED_BUTTONS1']
 show_timed_buttons2 = app.config['SHOW_TIMED_BUTTONS2']
 timed_buttons1_seconds = app.config['TIMED_BUTTONS1_SECONDS']
 timed_buttons2_seconds = app.config['TIMED_BUTTONS2_SECONDS']
+timed_buttons1_seconds_3rd =  app.config['TIMED_BUTTONS1_SECONDS_3RD']
+timed_buttons2_seconds_3rd =  app.config['TIMED_BUTTONS2_SECONDS_3RD']
 
 # -------------- App Context Resources ----------------
 def get_api_client() -> GaragePiClient:
@@ -89,7 +90,6 @@ def close_db(error):
 @app.route('/')
 def show_control():
     app.logger.debug('Received request for /')
-    session['show_timed_buttons'] = show_timed_buttons
     session['show_timed_buttons1'] = show_timed_buttons1
     session['show_timed_buttons2'] = show_timed_buttons2
     session['timed_buttons1_seconds'] = timed_buttons1_seconds
@@ -118,7 +118,8 @@ def trigger_openclosetimed():
         abort(401)
 
     autoTime = replay_delay_seconds
-    newTime = int(request.form['time']) #request.args.get('time')
+    btn = int(request.form['btn'])
+    newTime = int(request.form['time'])
     if isinstance(newTime, int):
         if newTime > 0 and newTime <= 120:
             autoTime = newTime
@@ -133,6 +134,21 @@ def trigger_openclosetimed():
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
     app.logger.debug('Relay delayed triggered')
+     
+    if (btn = 1):
+      if (timed_buttons1_seconds_3rd > 0):
+         time.sleep(timed_buttons1_seconds_3rd)
+         get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+         app.logger.debug('Relay delayed 3rd triggered 9 - btn1')
+     
+    if (btn = 2):
+      if (timed_buttons2_seconds_3rd > 0):
+         time.sleep(timed_buttons2_seconds_3rd)
+         get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+         app.logger.debug('Relay delayed 3rd triggered - btn2')
+          
     flash('Relay successfully triggered')
     return redirect(url_for('show_control'))
 
