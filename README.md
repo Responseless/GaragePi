@@ -19,9 +19,8 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 #### May 2021 Update - mRaRn
 
-- Added Configuration to hide timed buttons
-- Used with my gate now instead of a Garage door so timed events are shorter so I may add user configurable later.
-- Upgraded some dependencies for security and other reasons as they were outdated and would not clean install automatically anymore.
+- Added Configuration to hide timed buttons, set time for each button before re-triggering. This can be used to stop a gate opening, or auto-close etc.
+- Upgraded some dependencies for security and other reasons as they were outdated and would not clean install automatically anymore (fixed).
 
 
 #### Dec 2019 Update - mRaRn
