@@ -65,20 +65,21 @@
           Trigger Door
       </button>
       <br />
- {% if session.show_timed_buttons %}
       <!-- Open / Close button -->
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="15">
-        15 secs
+{% if session.show_timed_buttons1 %}
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="{{ timed_buttons1_seconds }}">
+        {{ timed_buttons1_seconds }} secs
       </button>
-      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="30">
-        30 secs
+{% endif %}
+{% if session.show_timed_buttons2 %}
+      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="{{ timed_buttons2_seconds }}">
+        {{ timed_buttons2_seconds }} secs
       </button>
-
+{% endif %}
 
       <div id="countdown" style="display:none; text-align:center;">
         <h3>Triggering in <span id="secondsCountdown"></span></h3>
       </div>
- {% endif %}
       
     </div>
 
