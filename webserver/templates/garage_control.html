@@ -67,13 +67,13 @@
       <br />
       <!-- Open / Close button -->
 {% if session.show_timed_buttons1 %}
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="{{ timed_buttons1_seconds }}">
-        {{ timed_buttons1_seconds }} secs
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="{{ session.timed_buttons1_seconds }}">
+        {{ session.timed_buttons1_seconds }} secs
       </button>
 {% endif %}
 {% if session.show_timed_buttons2 %}
-      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="{{ timed_buttons2_seconds }}">
-        {{ timed_buttons2_seconds }} secs
+      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-val="{{ session.timed_buttons2_seconds }}">
+        {{ session.timed_buttons2_seconds }} secs
       </button>
 {% endif %}
 
