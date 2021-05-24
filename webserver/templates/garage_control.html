@@ -134,9 +134,10 @@
     // Auto close or open (repeat function) after x seconds
     $('#triggerButtonTimed').click(function(e){
       e.preventDefault();
+      var btn = parseInt($(this).data('btn'));
       var autoTime = parseInt($(this).data('val'));
       if (autoTime > 0 && autoTime <= 60) {
-        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime } );
+        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime, btn: btn } );
         countdown(autoTime);
       } else {
         alert("error: value is bad.");
