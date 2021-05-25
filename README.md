@@ -100,7 +100,7 @@ overengineered).
    do the hardware bit and the RPi environment setup.
 2. Run the fully automated installer by running this command logged into your Raspberry Pi.  
 
-    `curl -s "https://raw.githubusercontent.com/mRaRn/GaragePi-simple/master/setup/online_install.sh" | bash`
+    `curl -s "https://raw.githubusercontent.com/mRaRn/GaragePi/master/setup/online_install.sh" | bash`
 
     (If you want to know what's going on, here are the full contents of [online_install.sh] and then [setup.sh] that is 
 called next.)
@@ -177,6 +177,6 @@ Channel.
 [vpn]: http://readwrite.com/2014/04/10/raspberry-pi-vpn-tutorial-server-secure-web-browsing
 [IFTTT]: https://ifttt.com/
 [Maker Channel]: https://ifttt.com/maker
-[online_install.sh]: https://github.com/mRaRn/GaragePi-simple/blob/master/setup/online_install.sh 
-[setup.sh]: https://github.com/mRaRn/GaragePi-simple/blob/master/setup/setup.sh
+[online_install.sh]: https://github.com/mRaRn/GaragePi/blob/master/setup/online_install.sh 
+[setup.sh]: https://github.com/mRaRn/GaragePi/blob/master/setup/setup.sh
 [Driscosity]: http://www.driscocity.com/idiots-guide-to-a-raspberry-pi-garage-door-opener/
