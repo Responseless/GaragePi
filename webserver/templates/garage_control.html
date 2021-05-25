@@ -68,12 +68,24 @@
       <!-- Open / Close button -->
 {% if session.show_timed_buttons1 %}
       <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="1" data-val="{{ session.timed_buttons1_seconds }}">
-        {{ session.timed_buttons1_seconds }} secs
+
+        {% if session.show_timed_buttons1_text|length %}
+          {{ session.show_timed_buttons1_text }}
+        {% else %}
+          {{ session.timed_buttons1_seconds }} secs
+        {% endif %}
+
       </button>
 {% endif %}
 {% if session.show_timed_buttons2 %}
       <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="2" data-val="{{ session.timed_buttons2_seconds }}">
-        {{ session.timed_buttons2_seconds }} secs
+        
+        {% if session.show_timed_buttons2_text|length %}
+          {{ session.show_timed_buttons2_text }}
+        {% else %}
+          {{ session.timed_buttons2_seconds }} secs
+        {% endif %}
+        
       </button>
 {% endif %}
 
