@@ -7,4 +7,4 @@ if [ $(id -u) -eq 0 ]; then
 else
 
 sudo ./uninstall.sh
-curl -s "https://raw.githubusercontent.com/mRaRn/GaragePi-simple/master/setup/online_install.sh" | bash
+curl -s "https://raw.githubusercontent.com/mRaRn/GaragePi/master/setup/online_install.sh" | bash
