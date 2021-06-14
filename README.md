@@ -17,13 +17,13 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
-#### May 2021 Update - mRaRn
+#### May 2021 Update - Responseless
 
 - Added Configuration to hide timed buttons, set time for each button before re-triggering. This can be used to stop a gate opening, or auto-close etc.
 - Upgraded some dependencies for security and other reasons as they were outdated and would not clean install automatically anymore (fixed).
 - Added favicons
 
-#### Dec 2019 Update - mRaRn
+#### Dec 2019 Update - Responseless
 
 - Added buttons to auto-close (or auto-open) the door after specified seconds 15/30.
 - Hid the Status of the door as I don't have a sensor connected to check this.
@@ -100,7 +100,7 @@ overengineered).
    do the hardware bit and the RPi environment setup.
 2. Run the fully automated installer by running this command logged into your Raspberry Pi.  
 
-    `curl -s "https://raw.githubusercontent.com/mRaRn/GaragePi/master/setup/online_install.sh" | bash`
+    `curl -s "https://raw.githubusercontent.com/Responseless/GaragePi/master/setup/online_install.sh" | bash`
 
     (If you want to know what's going on, here are the full contents of [online_install.sh] and then [setup.sh] that is 
 called next.)
@@ -177,6 +177,6 @@ Channel.
 [vpn]: http://readwrite.com/2014/04/10/raspberry-pi-vpn-tutorial-server-secure-web-browsing
 [IFTTT]: https://ifttt.com/
 [Maker Channel]: https://ifttt.com/maker
-[online_install.sh]: https://github.com/mRaRn/GaragePi/blob/master/setup/online_install.sh 
-[setup.sh]: https://github.com/mRaRn/GaragePi/blob/master/setup/setup.sh
+[online_install.sh]: https://github.com/Responseless/GaragePi/blob/master/setup/online_install.sh 
+[setup.sh]: https://github.com/Responseless/GaragePi/blob/master/setup/setup.sh
 [Driscosity]: http://www.driscocity.com/idiots-guide-to-a-raspberry-pi-garage-door-opener/
