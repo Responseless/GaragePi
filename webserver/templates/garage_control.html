@@ -34,8 +34,8 @@
               <p>Confirm that you want to trigger the door.</p>
             </div>
             <div class="modal-footer">
-              <button type="submit" id="triggerButton" class="btn btn-default btn-success pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Proceed</button>
-              <button type="button" class="btn btn-default btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+              <button type="submit" id="triggerButton" class="btn btn-default btn-success pull-left btn-height-override" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Proceed</button>
+              <button type="button" class="btn btn-default btn-danger btn-height-override" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
             </div>
           </div>
         </div>
@@ -53,21 +53,21 @@
             <p>Confirm that you want to trigger the door with auto close/open.</p>
           </div>
           <div class="modal-footer">
-            <button type="submit" id="triggerButtonTimed" class="btn btn-default btn-success pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Proceed</button>
-            <button type="button" class="btn btn-default btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            <button type="submit" id="triggerButtonTimed" class="btn btn-default btn-success pull-left btn-height-override" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Proceed</button>
+            <button type="button" class="btn btn-default btn-danger btn-height-override" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           </div>
         </div>
       </div>
     </div>
 
       <!-- Open / Close button -->
-      <button type="button" id="openCloseButton" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModal">
+      <button type="button" id="openCloseButton" class="btn btn-primary btn-lg btn-block btn-height-override" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModal">
           Trigger Door
       </button>
       <br />
       <!-- Open / Close button -->
 {% if session.show_timed_buttons1 %}
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="1" data-val="{{ session.timed_buttons1_seconds }}">
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="1" data-val="{{ session.timed_buttons1_seconds }}">
 
         {% if session.show_timed_buttons1_text|length %}
           {{ session.show_timed_buttons1_text }}
@@ -78,7 +78,7 @@
       </button>
 {% endif %}
 {% if session.show_timed_buttons2 %}
-      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="2" data-val="{{ session.timed_buttons2_seconds }}">
+      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="2" data-val="{{ session.timed_buttons2_seconds }}">
         
         {% if session.show_timed_buttons2_text|length %}
           {{ session.show_timed_buttons2_text }}
