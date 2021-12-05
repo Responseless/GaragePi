@@ -53,3 +53,7 @@
 .open_closed_btn {
   padding: 20px;
 }
+
+.btn-height-override {
+  height: 120px !important;
+}
