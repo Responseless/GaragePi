@@ -17,6 +17,12 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
+
+#### December 2021 Update - Responseless
+
+- Added check toggle to bypass modal warning and directly trigger
+- Updated trigger times to use float instead of integer. This was due to adding a button for quick re-open for gates which auto-close after opening.
+
 #### May 2021 Update - Responseless
 
 - Added Configuration to hide timed buttons, set time for each button before re-triggering. This can be used to stop a gate opening, or auto-close etc.
