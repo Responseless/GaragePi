@@ -11,8 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex">
-  
+
   <link rel="shortcut icon" type="image/ico" href="{{ url_for('static', filename='favicon.ico') }}"/>
   <link rel="apple-touch-icon" sizes="128x128" href="{{ url_for('static', filename='favicon.png') }}">
 
@@ -29,6 +28,12 @@
         {% if not session.logged_in %}
           <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> log in</a></li>
         {% else %}
+          <li class="nowarning-btn">
+            <label class="switch">
+            <input type="checkbox" id="noWarningsOpen">
+            <span class="slider round"></span>
+          </label>
+          </li>
           <li><a href="{{ url_for('show_control') }}">control</a></li>
           <li><a href="{{ url_for('show_history') }}">history</a></li>
           <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> log out</a></li>
