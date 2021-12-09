@@ -15,8 +15,8 @@
 
       <div class="panel panel-primary text-center">
         <div class="panel-heading">Pi Status</div>
-        <h5>CPU: <span id="cpuTemp">?</span>Â° C / <span id="cpuTempF">?</span>Â° F</h5>
-        <h5>GPU: <span id="gpuTemp">?</span>Â° C / <span id="gpuTempF">?</span>Â° F</h5>
+        <h5>CPU: <span id="cpuTemp">?</span>° C / <span id="cpuTempF">?</span>° F</h5>
+        <h5>GPU: <span id="gpuTemp">?</span>° C / <span id="gpuTempF">?</span>° F</h5>
       </div>
     </div>
 
@@ -61,13 +61,22 @@
     </div>
 
       <!-- Open / Close button -->
-      <button type="button" id="openCloseButton" class="btn btn-primary btn-lg btn-block btn-height-override" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModal">
+      <!--button type="button" id="openCloseButton" class="btn btn-primary btn-lg btn-block btn-height-override" style="vertical-align: middle" data-toggle="modal" data-target="#confirmModal">
           Trigger Door
-      </button>
+      </button-->
+
+      <button type="button" id="openCloseButton" class="btn btn-primary btn-lg btn-block btn-height-override" style="vertical-align: middle">
+        Trigger Door
+    </button>
+
       <br />
       <!-- Open / Close button -->
 {% if session.show_timed_buttons1 %}
-      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="1" data-val="{{ session.timed_buttons1_seconds }}">
+      <!--button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
+        data-toggle="modal" data-target="#confirmModalTimed" data-btnNo="1" data-val="{{ session.timed_buttons1_seconds }}"-->
+
+      <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
+         data-btnNo="1" data-val="{{ session.timed_buttons1_seconds }}">
 
         {% if session.show_timed_buttons1_text|length %}
           {{ session.show_timed_buttons1_text }}
@@ -78,8 +87,12 @@
       </button>
 {% endif %}
 {% if session.show_timed_buttons2 %}
-      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" data-toggle="modal" data-target="#confirmModalTimed" data-btntime="2" data-val="{{ session.timed_buttons2_seconds }}">
+      <!--button type="button" id="openCloseButtonTimed2old" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
+        data-toggle="modal" data-target="#confirmModalTimed" data-btnNo="2" data-val="{{ session.timed_buttons2_seconds }}"-->
         
+      <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
+        data-btnNo="2" data-val="{{ session.timed_buttons2_seconds }}">
+
         {% if session.show_timed_buttons2_text|length %}
           {{ session.show_timed_buttons2_text }}
         {% else %}
@@ -92,7 +105,10 @@
       <div id="countdown" style="display:none; text-align:center;">
         <h3>Triggering in <span id="secondsCountdown"></span></h3>
       </div>
-      
+
+      <input type="hidden" id="btn_t1"/>
+      <input type="hidden" id="btn_t2"/>
+
     </div>
 
   </div>
@@ -146,13 +162,13 @@
     // Auto close or open (repeat function) after x seconds
     $('#triggerButtonTimed').click(function(e){
       e.preventDefault();
-      var btntime = parseFloat($(this).data('btntime'));
+      var btnNo = parseFloat($(this).data('btnNo'));
       var autoTime = parseFloat($(this).data('val'));
       if (autoTime > 0 && autoTime <= 60) {
-        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime, btn: btntime } );
+        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime, btn: btnNo } );
         countdown(autoTime);
       } else {
-        alert("error: value is bad.");
+        alert("error: value is bad. Check your app.cfg");
       }
     });
 
@@ -160,9 +176,53 @@
     $('#confirmModalTimed').on('show.bs.modal', function (event) {
       var timerVal = $(event.relatedTarget).data('val');
       $(this).find("#triggerButtonTimed").attr("data-val", timerVal);
-      var btntimeVal = $(event.relatedTarget).data('btntime');
-      $(this).find("#triggerButtonTimed").attr("data-btntime", btntimeVal);
+      var btnNoVal = $(event.relatedTarget).data('btnNo');
+      $(this).find("#triggerButtonTimed").attr("data-btnNo", btnNoVal);
     });
+
+    
+
+    $('#openCloseButton').click(function(event){
+      runNoWarnings(0, 0);
+    });
+
+    $('#openCloseButtonTimed').click(function(event){
+      runNoWarnings(1, {{ session.timed_buttons1_seconds }});
+    });
+
+    $('#openCloseButtonTimed2').click(function(event){
+      runNoWarnings(2, {{ session.timed_buttons2_seconds }});
+    });
+
+    function runNoWarnings(btnNo, timeSecs) {
+      if (localStorage.getItem('noWarningsOpen','true') !== 'true'){
+        $('#confirmModalTimed').modal('show');
+      } else {
+        var btnNoVal = btnNo,
+            timerVal = timeSecs; // {{ session.timed_buttons2_seconds }};
+
+        if (btnNo === 0) {
+          $.post("{{ url_for('trigger_openclose') }}");
+        } else if (btnNo > 0 && btnNo < 3 && timerVal > 0 && timerVal <= 60) {
+          $.post("{{ url_for('trigger_openclosetimed') }}", { time: timerVal, btn: btnNoVal } );
+          countdown(timerVal);
+        } else {
+          alert("error: Value is bad. Check your app.cfg");
+        }
+      }
+    }
+
+    $('#noWarningsOpen').click(function(e){
+      if (localStorage.getItem('noWarningsOpen') === undefined || localStorage.getItem('noWarningsOpen') === 'false'){
+        localStorage.setItem('noWarningsOpen','true');
+      }else{
+        localStorage.setItem('noWarningsOpen','false');
+      }
+    });
+
+    if (localStorage.getItem('noWarningsOpen') !== undefined && localStorage.getItem('noWarningsOpen') === 'true') {
+      $("#noWarningsOpen").prop('checked', true);
+    }
 
   });
 
