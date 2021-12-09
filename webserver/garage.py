@@ -125,8 +125,8 @@ def trigger_openclosetimed():
 
     autoTime = replay_delay_seconds
     btn = int(request.form['btn'])
-    newTime = int(request.form['time']) #request.args.get('time')
-    if isinstance(newTime, int):
+    newTime = float(request.form['time']) #request.args.get('time')
+    if isinstance(newTime, float):
         if newTime > 0 and newTime <= 120:
             autoTime = newTime
 
@@ -177,8 +177,8 @@ def trigger_opencloseAPItimed():
     if not api_trigger_key: return 'No api_trigger_key setup!'
 
     autoTime = replay_delay_seconds
-    newTime = int(request.form['time']) #request.args.get('time')
-    if isinstance(newTime, int):
+    newTime = float(request.form['time']) #request.args.get('time')
+    if isinstance(newTime, float):
         if newTime > 0 and newTime <= 120:
             autoTime = newTime
 
