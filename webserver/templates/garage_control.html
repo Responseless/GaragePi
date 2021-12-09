@@ -15,8 +15,8 @@
 
       <div class="panel panel-primary text-center">
         <div class="panel-heading">Pi Status</div>
-        <h5>CPU: <span id="cpuTemp">?</span>° C / <span id="cpuTempF">?</span>° F</h5>
-        <h5>GPU: <span id="gpuTemp">?</span>° C / <span id="gpuTempF">?</span>° F</h5>
+        <h5>CPU: <span id="cpuTemp">?</span>Â° C / <span id="cpuTempF">?</span>Â° F</h5>
+        <h5>GPU: <span id="gpuTemp">?</span>Â° C / <span id="gpuTempF">?</span>Â° F</h5>
       </div>
     </div>
 
@@ -146,8 +146,8 @@
     // Auto close or open (repeat function) after x seconds
     $('#triggerButtonTimed').click(function(e){
       e.preventDefault();
-      var btntime = parseInt($(this).data('btntime'));
-      var autoTime = parseInt($(this).data('val'));
+      var btntime = parseFloat($(this).data('btntime'));
+      var autoTime = parseFloat($(this).data('val'));
       if (autoTime > 0 && autoTime <= 60) {
         $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime, btn: btntime } );
         countdown(autoTime);
@@ -180,8 +180,8 @@
     
     countdowndiv.setAttribute("style", "display: block; text-align:center;");
     inter = setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
+      minutes = parseFloat(timer / 60, 10);
+      seconds = parseFloat(timer % 60, 10);
 
       minutes = minutes < 10 ? "" + minutes : minutes;
       seconds = seconds < 10 ? "" + seconds : seconds;
