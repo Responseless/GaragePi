@@ -48,10 +48,10 @@ app.logger.debug('Loading default config file from \'%s\'' % default_cfg_file)
 app.config.from_pyfile(default_cfg_file)
 app.logger.debug('Looking for custom app config in \'%s\'' % os.path.join(app.instance_path, 'app.cfg'))
 app.config.from_pyfile('app.cfg')
+app.logger.debug('Loaded custom app config...')
 api_trigger_key = app.config['API_TRIGGER_KEY']
 replay_delay_seconds = app.config['REPLAY_DELAY_TIMER_SECONDS']
 if not replay_delay_seconds: replay_delay_seconds = 30
-show_timed_buttons = app.config['SHOW_TIMED_BUTTONS']
 show_timed_buttons1 = app.config['SHOW_TIMED_BUTTONS1']
 show_timed_buttons2 = app.config['SHOW_TIMED_BUTTONS2']
 show_timed_buttons1_text = app.config['SHOW_TIMED_BUTTONS1_TEXT']
@@ -60,6 +60,8 @@ timed_buttons1_seconds = app.config['TIMED_BUTTONS1_SECONDS']
 timed_buttons2_seconds = app.config['TIMED_BUTTONS2_SECONDS']
 timed_buttons1_seconds_3rd = app.config['TIMED_BUTTONS1_SECONDS_3RD']
 timed_buttons2_seconds_3rd = app.config['TIMED_BUTTONS2_SECONDS_3RD']
+
+app.logger.debug('Setup variables...')
 
 # -------------- App Context Resources ----------------
 def get_api_client() -> GaragePiClient:
@@ -93,7 +95,6 @@ def close_db(error):
 @app.route('/')
 def show_control():
     app.logger.debug('Received request for /')
-    session['show_timed_buttons'] = show_timed_buttons
     session['show_timed_buttons1'] = show_timed_buttons1
     session['show_timed_buttons2'] = show_timed_buttons2
     session['show_timed_buttons1_text'] = show_timed_buttons1_text
