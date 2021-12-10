@@ -28,14 +28,19 @@
         {% if not session.logged_in %}
           <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> log in</a></li>
         {% else %}
+          {% if request.path=="/" %}
           <li class="nowarning-btn">
             <label class="switch">
             <input type="checkbox" id="noWarningsOpen">
             <span class="slider round"></span>
           </label>
           </li>
+          {% endif %}
+          {% if not request.path=="/" %}
           <li><a href="{{ url_for('show_control') }}">control</a></li>
+          {% else %} 
           <li><a href="{{ url_for('show_history') }}">history</a></li>
+          {% endif %}
           <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> log out</a></li>
         {% endif %}
       </ul>
