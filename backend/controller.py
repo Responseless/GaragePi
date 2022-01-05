@@ -137,6 +137,10 @@ class GaragePiController:
         data.cpu_temp_f = data.cpu_temp_c * 9.0 / 5.0 + 32
         data.gpu_temp_c = self.get_gpu_temperature()
         data.gpu_temp_f = data.gpu_temp_c * 9.0 / 5.0 + 32
+        data.test_temp_c = self.get_test_temperature()
+        data.test_temp_f = data.test_temp_c * 9.0 / 5.0 + 32
+
+
         return data
 
     def get_cpu_temperature(self) -> float:
@@ -148,6 +152,11 @@ class GaragePiController:
         res = os.popen('vcgencmd measure_temp').readline()
         app.logger.debug('Checked GPU temp and got: %r' % res)
         return float(res.replace("temp=","").replace("'C\n",""))
+
+    def get_test_temperature(self) -> float:
+        res = os.popen('python get_bme280.py').readline()
+        app.logger.debug('Checked TEST temp and got: %r' % res)
+        return 69.420
 
     def trigger_relay(self, user_agent: str, login: str):
         """ Triggers the relay for a short period. """
