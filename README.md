@@ -17,6 +17,10 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
+## Jan 2022 Update - Responseless
+
+- Fixed Issue with old manual toggles
+- Added TEST temperature for bme280 module (in works)
 
 #### December 2021 Update - Responseless
 
