@@ -131,17 +131,20 @@
                 //$("#openCloseButton").html(data.is_open ? "Close Door": "Open Door");
                 //$("#doorAction").html(data.is_open ? "close": "open");
                 $("#cpuTemp").html(data.cpu_temp_c.toFixed(2));
-                $("#gpuTemp").html(data.gpu_temp_c.toFixed(2));
                 $("#cpuTempF").html(data.cpu_temp_f.toFixed(2));
+                $("#gpuTemp").html(data.gpu_temp_c.toFixed(2));
                 $("#gpuTempF").html(data.gpu_temp_f.toFixed(2));
-
+                $("#testTemp").html(data.test_temp_c.toFixed(2));
+                $("#testTempF").html(data.test_temp_f.toFixed(2));
               })
               .fail(function() {
                 $("#status").text("UNKNOWN").removeClass("text-warning text-success");
                 $("#cpuTemp").html("?");
-                $("#gpuTemp").html("?");
                 $("#cpuTempF").html("?");
+                $("#gpuTemp").html("?");
                 $("#gpuTempF").html("?");
+                $("#testTemp").html("?");
+                $("#testTempF").html("?");
               });
   }
 
