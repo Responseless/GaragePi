@@ -20,7 +20,11 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 ## Jan 2022 Update - Responseless
 
 - Fixed Issue with old manual toggles
-- Added TEST temperature for bme280 module (in works)
+- Added TEST temperature for bme280 module (in the works)
+- Added Telegram Notifications (from nathanpjones)
+
+GaragePi now supports Telegram notifications. Get your Bot key and chat ID and place it in the app.cfg file to enable telegram notifications.
+You can read more about getting this information from the apprise wiki https://github.com/caronc/apprise/wiki/Notify_telegram
 
 #### December 2021 Update - Responseless
 
@@ -82,10 +86,11 @@ other features that require running all the time instead of just within a web re
 - Open / close the garage door with the press of a button.
 - See if garage door is currently open.
 - See history of when the door was opened or closed even when it wasn't opened/closed using the app.
+- Download entire history to CSV file
 - Garage door activity generates [IFTTT] events.
 - Responsive UI for both desktop and mobile use.
 - Show the RPI's internal temps because, well, I can.
-- Added Extra buttons to Auto close door after 15 and 30 seconds
+- Added Extra buttons to Auto close door after user specified seconds
 - Added API for remote calls without using web interface
 
 #### Planned Features
