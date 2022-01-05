@@ -17,6 +17,7 @@
         <div class="panel-heading">Pi Status</div>
         <h5>CPU: <span id="cpuTemp">?</span>° C / <span id="cpuTempF">?</span>° F</h5>
         <h5>GPU: <span id="gpuTemp">?</span>° C / <span id="gpuTempF">?</span>° F</h5>
+        <h5 class="hidden">Test: <span id="testTemp">?</span>° C / <span id="testTempF">?</span>° F</h5>
       </div>
     </div>
 
@@ -73,10 +74,10 @@
       <!-- Open / Close button -->
 {% if session.show_timed_buttons1 %}
       <!--button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-        data-toggle="modal" data-target="#confirmModalTimed" data-btnNo="1" data-val="{{ session.timed_buttons1_seconds }}"-->
+        data-toggle="modal" data-target="#confirmModalTimed" data-btnno="1" data-val="{{ session.timed_buttons1_seconds }}"-->
 
       <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-         data-btnNo="1" data-val="{{ session.timed_buttons1_seconds }}">
+         data-btnno="1" data-val="{{ session.timed_buttons1_seconds }}">
 
         {% if session.show_timed_buttons1_text|length %}
           {{ session.show_timed_buttons1_text }}
@@ -88,10 +89,10 @@
 {% endif %}
 {% if session.show_timed_buttons2 %}
       <!--button type="button" id="openCloseButtonTimed2old" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-        data-toggle="modal" data-target="#confirmModalTimed" data-btnNo="2" data-val="{{ session.timed_buttons2_seconds }}"-->
+        data-toggle="modal" data-target="#confirmModalTimed" data-btnno="2" data-val="{{ session.timed_buttons2_seconds }}"-->
         
       <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-        data-btnNo="2" data-val="{{ session.timed_buttons2_seconds }}">
+        data-btnno="2" data-val="{{ session.timed_buttons2_seconds }}">
 
         {% if session.show_timed_buttons2_text|length %}
           {{ session.show_timed_buttons2_text }}
@@ -105,9 +106,6 @@
       <div id="countdown" style="display:none; text-align:center;">
         <h3>Triggering in <span id="secondsCountdown"></span></h3>
       </div>
-
-      <input type="hidden" id="btn_t1"/>
-      <input type="hidden" id="btn_t2"/>
 
     </div>
 
@@ -162,10 +160,10 @@
     // Auto close or open (repeat function) after x seconds
     $('#triggerButtonTimed').click(function(e){
       e.preventDefault();
-      var btnNo = parseFloat($(this).data('btnNo'));
+      var btnno = parseInt($(this).data('btnno'));
       var autoTime = parseFloat($(this).data('val'));
       if (autoTime > 0 && autoTime <= 60) {
-        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime, btn: btnNo } );
+        $.post("{{ url_for('trigger_openclosetimed') }}", { time: autoTime, btn: btnno } );
         countdown(autoTime);
       } else {
         alert("error: value is bad. Check your app.cfg");
@@ -176,11 +174,9 @@
     $('#confirmModalTimed').on('show.bs.modal', function (event) {
       var timerVal = $(event.relatedTarget).data('val');
       $(this).find("#triggerButtonTimed").attr("data-val", timerVal);
-      var btnNoVal = $(event.relatedTarget).data('btnNo');
-      $(this).find("#triggerButtonTimed").attr("data-btnNo", btnNoVal);
+      var btnnoVal = $(event.relatedTarget).data('btnno');
+      $(this).find("#triggerButtonTimed").attr("data-btnno", btnnoVal);
     });
-
-    
 
     $('#openCloseButton').click(function(event){
       runNoWarnings(0, 0);
@@ -194,17 +190,32 @@
       runNoWarnings(2, {{ session.timed_buttons2_seconds }});
     });
 
-    function runNoWarnings(btnNo, timeSecs) {
+    function runNoWarnings(btnno, timeSecs) {
       if (localStorage.getItem('noWarningsOpen','true') !== 'true'){
-        $('#confirmModalTimed').modal('show');
+
+        switch(btnno) {
+        case 0:
+          $('#confirmModal').modal('show', $("#openCloseButton"));
+          break;
+        case 1:
+          $('#confirmModalTimed').modal('show', $("#openCloseButtonTimed"));
+          break;
+        case 2:
+          $('#confirmModalTimed').modal('show', $("#openCloseButtonTimed2"));
+          break;
+
+        default:
+          // Nothing
+        }
+
       } else {
-        var btnNoVal = btnNo,
+        var btnnoVal = btnno,
             timerVal = timeSecs; // {{ session.timed_buttons2_seconds }};
 
-        if (btnNo === 0) {
+        if (btnno === 0) {
           $.post("{{ url_for('trigger_openclose') }}");
-        } else if (btnNo > 0 && btnNo < 3 && timerVal > 0 && timerVal <= 60) {
-          $.post("{{ url_for('trigger_openclosetimed') }}", { time: timerVal, btn: btnNoVal } );
+        } else if (btnno > 0 && btnno < 3 && timerVal > 0 && timerVal <= 60) {
+          $.post("{{ url_for('trigger_openclosetimed') }}", { time: timerVal, btn: btnnoVal } );
           countdown(timerVal);
         } else {
           alert("error: Value is bad. Check your app.cfg");
@@ -227,7 +238,7 @@
   });
 
   function countdown(seconds) {
-    var countdown = seconds,
+    var countdown = parseInt(seconds),
     countdowndiv = document.querySelector('#countdown'),
     display = document.querySelector('#secondsCountdown');
     //document.querySelector('#openCloseButtonTimed').setAttribute("disabled","disabled");
@@ -240,8 +251,8 @@
     
     countdowndiv.setAttribute("style", "display: block; text-align:center;");
     inter = setInterval(function () {
-      minutes = parseFloat(timer / 60, 10);
-      seconds = parseFloat(timer % 60, 10);
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
 
       minutes = minutes < 10 ? "" + minutes : minutes;
       seconds = seconds < 10 ? "" + seconds : seconds;
