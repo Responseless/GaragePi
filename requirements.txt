@@ -9,6 +9,6 @@ requests==2.21.0
 RPi.GPIO==0.6.5
 schedule==0.6.0
 werkzeug>=0.15.3
-wheel==0.33.1
+wheel==0.38.1
 smbus2==0.4.1
 RPi.bme280==0.2.3
