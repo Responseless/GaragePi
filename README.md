@@ -17,6 +17,12 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
+## May 2023 Update - Responseless
+
+- Update dependencies with security issues
+- changed pip version install
+- Re-tested uninstall / setup
+
 ## Jan 2022 Update - Responseless
 
 - Fixed Issue with old manual toggles
