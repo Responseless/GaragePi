@@ -1,4 +1,4 @@
-# GaragePi Custom
+# GaragePi Custom - Based on https://github.com/nathanpjones/GaragePi
 Overengineer your garage door with your Raspberry Pi!
 
 Use a Raspberry Pi to open or close your garage door and to sense whether it's currently open. You can do this from the 
@@ -26,7 +26,7 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 ## Jan 2022 Update - Responseless
 
 - Fixed Issue with old manual toggles
-- Added TEST temperature for bme280 module (in works)
+- Added TEST temperature for bme280 module (in the works)
 
 #### December 2021 Update - Responseless
 
@@ -56,32 +56,6 @@ See [below](#ifttt-events) for alert details and how to set them up.
 I also pulled the app into two parts, one for the webserver and one that's always running and talking to the RPi. This 
 makes it so the webserver doesn't have to run with root privileges. More importantly, this also enables a whole lot of 
 other features that require running all the time instead of just within a web request.
-
-#### Screenshots
-
-<div>
-
-<a href="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/01-Door-Open.png">
-<img src="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/01-Door-Open.png" width="250" height="445">
-</a>
-
-<a href="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/02-Close-Button-Pushed.png">
-<img src="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/02-Close-Button-Pushed.png" width="250" height="445">
-</a>
-
-<a href="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/03-After-Closed.png">
-<img src="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/03-After-Closed.png" width="250" height="445">
-</a>
-
-<a href="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/04-History.png">
-<img src="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/04-History.png" width="250" height="445">
-</a>
-
-<a href="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/05-History-Landscape.png">
-<img src="http://www.nathanpjones.com/wp/wp-content/uploads/2015/08/05-History-Landscape.png" width="445" height="250">
-</a>
-
-</div> 
 
 # Features
 
