@@ -90,7 +90,7 @@ overengineered).
    do the hardware bit and the RPi environment setup.
 2. Run the fully automated installer by running this command logged into your Raspberry Pi.  
 
-    `curl -s "https://raw.githubusercontent.com/Responseless/GaragePi/master/setup/online_install.sh" | bash`
+    `curl -s "https://raw.githubusercontent.com/Responseless/GaragePi/dev/setup/online_install.sh" | bash`
 
     (If you want to know what's going on, here are the full contents of [online_install.sh] and then [setup.sh] that is 
 called next.)
