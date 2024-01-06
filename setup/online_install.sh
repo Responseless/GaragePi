@@ -18,7 +18,7 @@ else
   # Pull down the repo
   echo -e "\nPulling down the repo..."
   cd ~
-  git clone https://github.com/Responseless/GaragePi.git garage_pi
+  git clone --branch dev https://github.com/Responseless/GaragePi.git garage_pi
 
   # Run the setup script
   echo -e "\nCalling the setup script..."
