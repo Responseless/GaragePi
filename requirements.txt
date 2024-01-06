@@ -1,14 +1,14 @@
 Flask==2.2.5
 flipflop==1.0
-itsdangerous==1.1.0
+itsdangerous>=2.0
 jinja2>=2.11.3
-MarkupSafe==1.1.1
+MarkupSafe>=2.0
 python-daemon==2.2.3
 pyzmq==18.0.1
 requests==2.31.0
 RPi.GPIO==0.6.5
 schedule==0.6.0
 werkzeug>=0.15.3
-wheel==0.33.1
+wheel==0.38.1
 smbus2==0.4.1
 RPi.bme280==0.2.3
