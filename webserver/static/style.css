@@ -50,6 +50,7 @@
 .navbar-right {
   float: right!important;
 }
+
 .open_closed_btn {
   padding: 20px;
 }
@@ -57,8 +58,6 @@
 .btn-height-override {
   height: 120px !important;
 }
-
-
 
 /* The switch - the box around the slider */
 .switch {

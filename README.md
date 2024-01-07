@@ -19,6 +19,7 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 ## Jan 2024 Updates - Responseless
 - Updated dependencies
+- Merged in Telegram and Crack Open functions (not fully working)
 
 ## May 2023 Update - Responseless
 

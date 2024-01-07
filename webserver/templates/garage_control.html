@@ -5,7 +5,6 @@
   <div class="row">
 
     <div class="col-sm-6 col-sm-push-6">
-
       <div class="panel panel-primary text-center" style="display: none;">
         <div class="panel-heading">Door Status</div>
         <h3 id="status" class="text-uppercase">UNKNOWN</h3>
@@ -85,6 +84,11 @@
           {{ session.timed_buttons1_seconds }} secs
         {% endif %}
 
+      </button>
+      <br>
+      <!-- I added another button that will act as the button to crack the garage open slightly -->
+      <button type="button" id="CrackOpenDoorButton" class="btn btn-primary btn-lg btn-block" style="vertical-align: middle; display:none;">
+        Crack Open Garage
       </button>
 {% endif %}
 {% if session.show_timed_buttons2 %}
@@ -239,6 +243,15 @@
     }
 
   });
+
+  //hook up crack open door button to trigger switch twice
+  $(function(){
+      $('#CrackOpenDoorButton').click(function(e){
+        e.preventDefault();
+        $.post("{{ url_for('trigger_crack') }}");
+      });
+  });
+
 
   function countdown(seconds) {
     var countdown = parseInt(seconds),
