@@ -17,11 +17,14 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 [Flask]: http://flask.pocoo.org/
 
+## Jan 2024 Updates - Responseless
+- Updated dependencies
+
 ## May 2023 Update - Responseless
 
 - Update dependencies with security issues
 - changed pip version install
-- Re-tested uninstall / setup
+- Retested uninstall / setup
 
 ## Jan 2022 Update - Responseless
 
@@ -44,7 +47,6 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 - Added buttons to auto-close (or auto-open) the door after specified seconds 15/30.
 - Hid the Status of the door as I don't have a sensor connected to check this.
 - Added external GET API point for other applications to hit to open/close the door without auth.
-
 
 #### Feb 2016 Update - IFTTT Maker Support!
 
@@ -83,30 +85,20 @@ other features that require running all the time instead of just within a web re
 
 </div> 
 
-# Features
+# Current Features
 
-- Open / close the garage door with the press of a button.
-- See if garage door is currently open.
+- Open / Close the garage/gate with the press of a button. With or without a secondary prompt.
+- See if garage/gate is currently open.
 - See history of when the door was opened or closed even when it wasn't opened/closed using the app.
-- Garage door activity generates [IFTTT] events.
+- Garage/gate activity generates [IFTTT] events.
 - Responsive UI for both desktop and mobile use.
 - Show the RPI's internal temps because, well, I can.
-- Added Extra buttons to Auto close door after 15 and 30 seconds
-- Added API for remote calls without using web interface
+- Added Extra buttons to Auto close door after 15 and 30 seconds.
+- Added API for remote calls without using web interface.
 
-#### Planned Features
+# Other Features
 
-I'm definitely planning on getting these done.
-
-- Make the password configurable. You can change it yourself, but you have to edit a config file.
-- ~~Send an alert if the door is open past a certain time. (I'm always leaving the door open all night.)~~ *Done!*
-
-Okay, I might never implement these, but here are some ideas for what would make it even better (read more 
-overengineered).
-
-- Add a function to open the door just partway for ventilation.
-- Close the door automatically at a certain time or after a certain amount of time.
-- Show stats of how much time the door is open, what hours it's most open, or other interesting trends. 
+See https://github.com/nathanpjones/GaragePi for any new features I may merge in this fork.
 
 # Installation
 
