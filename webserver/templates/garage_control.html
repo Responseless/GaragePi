@@ -74,30 +74,30 @@
       <!-- Open / Close button -->
 {% if session.show_timed_buttons1 %}
       <!--button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-        data-toggle="modal" data-target="#confirmModalTimed" data-btnno="1" data-val="{{ session.timed_buttons1_seconds }}"-->
+        data-toggle="modal" data-target="#confirmModalTimed" data-btnno="1" data-val="{{ session.timed_buttons1_close_secs }}"-->
 
       <button type="button" id="openCloseButtonTimed" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-         data-btnno="1" data-val="{{ session.timed_buttons1_seconds }}">
+         data-btnno="1" data-val="{{ session.timed_buttons1_stop_secs }}">
 
         {% if session.show_timed_buttons1_text|length %}
           {{ session.show_timed_buttons1_text }}
         {% else %}
-          {{ session.timed_buttons1_seconds }} secs
+          {{ session.timed_buttons1_stop_secs }} secs
         {% endif %}
 
       </button>
 {% endif %}
 {% if session.show_timed_buttons2 %}
       <!--button type="button" id="openCloseButtonTimed2old" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-        data-toggle="modal" data-target="#confirmModalTimed" data-btnno="2" data-val="{{ session.timed_buttons2_seconds }}"-->
+        data-toggle="modal" data-target="#confirmModalTimed" data-btnno="2" data-val="{{ session.timed_buttons2_stop_secs }}"-->
         
       <button type="button" id="openCloseButtonTimed2" class="btn btn-primary btn-lg btn-height-override" style="vertical-align: middle; width: 49%;" 
-        data-btnno="2" data-val="{{ session.timed_buttons2_seconds }}">
+        data-btnno="2" data-val="{{ session.timed_buttons2_stop_secs }}">
 
         {% if session.show_timed_buttons2_text|length %}
           {{ session.show_timed_buttons2_text }}
         {% else %}
-          {{ session.timed_buttons2_seconds }} secs
+          {{ session.timed_buttons2_stop_secs }} secs
         {% endif %}
         
       </button>
@@ -186,11 +186,11 @@
     });
 
     $('#openCloseButtonTimed').click(function(event){
-      runNoWarnings(1, {{ session.timed_buttons1_seconds }});
+      runNoWarnings(1, {{ session.timed_buttons1_stop_secs }});
     });
 
     $('#openCloseButtonTimed2').click(function(event){
-      runNoWarnings(2, {{ session.timed_buttons2_seconds }});
+      runNoWarnings(2, {{ session.timed_buttons2_stop_secs }});
     });
 
     function runNoWarnings(btnno, timeSecs) {
@@ -213,7 +213,7 @@
 
       } else {
         var btnnoVal = btnno,
-            timerVal = timeSecs; // {{ session.timed_buttons2_seconds }};
+            timerVal = timeSecs; // {{ session.timed_buttons2_stop_secs }};
 
         if (btnno === 0) {
           $.post("{{ url_for('trigger_openclose') }}");
