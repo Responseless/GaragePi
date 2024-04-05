@@ -2,17 +2,15 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 import os
+import time
 import sys
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash, jsonify, has_request_context, send_from_directory, send_file
+     render_template, flash, jsonify, has_request_context
 
 from common import constants
 from common.db import GarageDb
 from common.iftt import IftttEvent
-from common.telegram import TelegramNotification
 from webserver.client_api import GaragePiClient
-import time
-import csv
 
 # ------------- Setup ------------
 
@@ -58,10 +56,10 @@ show_timed_buttons1 = app.config['SHOW_TIMED_BUTTONS1']
 show_timed_buttons2 = app.config['SHOW_TIMED_BUTTONS2']
 show_timed_buttons1_text = app.config['SHOW_TIMED_BUTTONS1_TEXT']
 show_timed_buttons2_text = app.config['SHOW_TIMED_BUTTONS2_TEXT']
-timed_buttons1_seconds = app.config['TIMED_BUTTONS1_SECONDS']
-timed_buttons2_seconds = app.config['TIMED_BUTTONS2_SECONDS']
-timed_buttons1_seconds_3rd = app.config['TIMED_BUTTONS1_SECONDS_3RD']
-timed_buttons2_seconds_3rd = app.config['TIMED_BUTTONS2_SECONDS_3RD']
+timed_buttons1_stop_secs = app.config['TIMED_BUTTONS1_SECONDS']
+timed_buttons1_close_secs = app.config['TIMED_BUTTONS1_SECONDS_3RD']
+timed_buttons2_stop_secs = app.config['TIMED_BUTTONS2_SECONDS']
+timed_buttons2_close_secs = app.config['TIMED_BUTTONS2_SECONDS_3RD']
 
 app.logger.debug('Setup variables...')
 
@@ -101,8 +99,10 @@ def show_control():
     session['show_timed_buttons2'] = show_timed_buttons2
     session['show_timed_buttons1_text'] = show_timed_buttons1_text
     session['show_timed_buttons2_text'] = show_timed_buttons2_text
-    session['timed_buttons1_seconds'] = timed_buttons1_seconds
-    session['timed_buttons2_seconds'] = timed_buttons2_seconds
+    session['timed_buttons1_stop_secs'] = timed_buttons1_stop_secs
+    session['timed_buttons2_stop_secs'] = timed_buttons2_stop_secs
+    session['timed_buttons1_close_secs'] = timed_buttons1_close_secs
+    session['timed_buttons2_close_secs'] = timed_buttons2_close_secs
  
     return render_template('garage_control.html')
 
@@ -114,27 +114,7 @@ def trigger_openclose():
         abort(401)
     app.logger.debug('Triggering relay')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
-                                   app.config['USERNAME']);
-    app.logger.debug('Relay triggered')
-    flash('Relay successfully triggered')
-    return redirect(url_for('show_control'))
-
-@app.route('/crack', methods=['POST'])
-def trigger_crack():
-    app.logger.debug('Received POST to crack')
-    if not session.get('logged_in'):
-        app.logger.warning('Refusing to trigger relay because not logged in!')
-        abort(401)
-    app.logger.debug('Triggering relay')
-    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
-                                   app.config['USERNAME']);
-    app.logger.debug('Relay triggered')
-    flash('Relay successfully triggered')
-    crack_delay = app.config['CRACK_DELAY']
-    time.sleep(crack_delay)
-    app.logger.debug('Triggering relay')
-    get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
-                                   app.config['USERNAME']);
+                                   app.config['USERNAME'])
     app.logger.debug('Relay triggered')
     flash('Relay successfully triggered')
     return redirect(url_for('show_control'))
@@ -146,38 +126,38 @@ def trigger_openclosetimed():
         app.logger.warning('Refusing to timed trigger relay because not logged in!')
         abort(401)
 
-    autoTime = replay_delay_seconds
-    btn = int(request.form['btn'])
-    newTime = float(request.form['time']) #request.args.get('time')
+    stopTime = replay_delay_seconds
+    btn = int(request.args.get('btn') or request.form.get('btn') or 0) 
+    newTime = float(request.args.get('time') or request.form.get('time') or 0)
     if isinstance(newTime, float):
         if newTime > 0 and newTime <= 120:
-            autoTime = newTime
+            stopTime = newTime
 
     app.logger.debug('Triggering relay')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
     app.logger.debug('Relay triggered')
-    app.logger.debug('Waiting ' + str(autoTime) + ' seconds')
-    time.sleep(autoTime)
-    app.logger.debug('Triggering delayed relay ' + str(autoTime) + ' seconds')
+    app.logger.debug('Waiting ' + str(stopTime) + ' seconds')
+    time.sleep(stopTime)
+    app.logger.debug('Triggering delayed relay ' + str(stopTime) + ' seconds')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
     app.logger.debug('Relay delayed triggered')
 
     if (btn == 1):
-      if (timed_buttons1_seconds_3rd > 0):
-         time.sleep(timed_buttons1_seconds_3rd)
+      if (timed_buttons1_close_secs > 0):
+         time.sleep(timed_buttons1_close_secs)
          get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
-         app.logger.debug('Relay delayed 3rd triggered 9 - btn1')
+         app.logger.debug('Relay close - btn1')
 
 
     if (btn == 2):
-      if (timed_buttons2_seconds_3rd > 0):
-         time.sleep(timed_buttons2_seconds_3rd)
+      if (timed_buttons2_close_secs > 0):
+         time.sleep(timed_buttons2_close_secs)
          get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
-         app.logger.debug('Relay delayed 3rd triggered - btn2')
+         app.logger.debug('Relay close - btn2')
 
     flash('Relay successfully triggered')
     return redirect(url_for('show_control'))
@@ -199,21 +179,46 @@ def trigger_opencloseAPItimed():
     app.logger.debug('Received GET to triggerAPItimed')
     if not api_trigger_key: return 'No api_trigger_key setup!'
 
-    autoTime = replay_delay_seconds
-    newTime = float(request.form['time']) #request.args.get('time')
+    stopTime = replay_delay_seconds
+    btn = int(request.args.get('btn') or request.form.get('btn') or 0) 
+
+    if (btn == 1):
+      if (timed_buttons1_stop_secs > 0):
+         newTime = float(timed_buttons1_stop_secs)
+
+    if (btn == 2):
+      if (timed_buttons2_stop_secs > 0):
+         newTime = float(timed_buttons2_stop_secs)
+
     if isinstance(newTime, float):
         if newTime > 0 and newTime <= 120:
-            autoTime = newTime
+            stopTime = newTime
 
     app.logger.debug('Triggering API timed relay')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
-    app.logger.debug('Waiting ' + str(autoTime) + ' seconds')
-    time.sleep(autoTime)
-    app.logger.debug('Triggering delayed API relay timed ' + str(autoTime) + ' seconds')
+    app.logger.debug('Waiting ' + str(stopTime) + ' seconds')
+    time.sleep(stopTime)
+    app.logger.debug('Triggering delayed API relay timed ' + str(stopTime) + ' seconds')
     get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
                                    app.config['USERNAME'])
     app.logger.debug('Relay delayed triggered')
+
+    if (btn == 1):
+      if (timed_buttons1_close_secs > 0):
+         time.sleep(timed_buttons1_close_secs)
+         get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+         app.logger.debug('Relay close - btn1')
+
+
+    if (btn == 2):
+      if (timed_buttons2_close_secs > 0):
+         time.sleep(timed_buttons2_close_secs)
+         get_api_client().trigger_relay(request.headers.get('User-Agent') if has_request_context() else 'SERVER',
+                                   app.config['USERNAME'])
+         app.logger.debug('Relay close - btn2')
+
     flash('Relay API successfully triggered')
     return redirect(url_for('show_control'))
 
@@ -235,11 +240,6 @@ def show_history():
     entries = db.read_history()
     return render_template('history.html', entries=entries)
 
-@app.route('/full_history')
-def show_full_history():
-    db = get_db()
-    entries = db.read_full_history()
-    return render_template('full_history.html', entries=entries)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -255,22 +255,6 @@ def login():
             flash('You were logged in')
             return redirect(url_for('show_control'))
     return render_template('login.html', error=error)
-
-
-@app.route('/download')
-def download():
-    db = get_db()
-    entries = db.read_full_history()
-    filename = 'history.csv'
-    with open(os.path.join(app.instance_path, filename),'w', newline='') as csv_file:
-        wr = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
-        wr.writerow(["Time","Event","Description"])
-        for row in entries:
-            wr.writerow(row)
-    try:
-        return send_from_directory(os.path.join(app.instance_path), filename, as_attachment=True, attachment_filename=filename)
-    except:
-        abort(404)
 
 
 @app.route('/logout')
@@ -313,15 +297,3 @@ def test_ifttt():
     result = event.trigger(value1, value2, value3)
 
     return 'Result: %r' % (result,)
-
-@app.route('/test_telegram')
-def test_telegram():
-    if not app.debug: return 'Only available when debug is set to True in application config.'
-    telegram_chat_id = str(app.config['APPRISE_TELEGRAM_CHAT_ID'])
-    telegram_key = str(app.config['APPRISE_TELEGRAM_KEY'])
-    if not telegram_key: return 'No Telegram key provided!'
-    app.logger.debug("Testing Telegram with %s and %s" % (telegram_key,telegram_chat_id))
-
-    event = TelegramNotification(telegram_key, telegram_chat_id, "Test notification from GaragePi", app.logger)
-    event.trigger()
-    return redirect(url_for('show_control'))
